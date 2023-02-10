@@ -6,27 +6,28 @@ String id=(String)session.getAttribute("id");
 if(id!=null){
 	%>
 	<div id="login">♥<%=id %> 님♥ |
-					<a href="../member/logout.jsp">logout</a>	|
-					<a href="../member/update.jsp">update</a></div>		
+					<a href="../member/logout.jsp">로그아웃</a>	|
+					<a href="../member/update.jsp">회원정보수정</a></div>		
 	<% 
 }else{
 	%>
-	<div id="login"><a href="../member/login.jsp">login</a> |
-					<a href="../member/join.jsp">join</a></div>	
+	<div id="login"><a href="../member/login.jsp">로그인</a> |
+					<a href="../member/join.jsp">회원가입</a></div>	
 	<%
 }
 %>
 <div class="clear"></div>
 <!-- 로고들어가는 곳 -->
-<div id="logo"><img src="../images/logo.gif" width="60" height="60" alt="house"></div>
+<div id="logo">
+	<a href="../main.jsp"><h1>섬집</h1></a>
+			</div>
 <!-- 로고들어가는 곳 -->
-<nav id="top_menu">
+<nav id="topmenu">
 <ul>
-	<li><a href="../main/main.html">HOME</a></li>
-	<li><a href="../.html">지역별 조회</a></li>
-	<li><a href="../.html">테마별 조회</a></li>
-	<li><a href="../.html">추천펜션</a></li>
-	<li><a href="../board/notice.html">공지사항</a></li>
+	<li><a href="../.jsp">지역별 조회</a></li>
+	<li><a href="../.jsp">테마별 조회</a></li>
+	<li><a href="../.jsp">추천펜션</a></li>
+	<li><a href="../board/BoardDetail.jsp">공지사항</a></li>
 </ul>
 </nav>
 </header>

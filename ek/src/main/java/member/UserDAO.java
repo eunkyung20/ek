@@ -201,6 +201,64 @@ public class UserDAO {
 			}
 			return dto;
 		}// findId
-			
+		
+		public void deleteUser(String id) {
+			Connection con = null;
+			PreparedStatement pstmt2 = null;
+			try {
+				// 1,2 디비연결 메서드
+				con = getConnection();
+				// 3단계
+				String sql2 = "delete from members where id=?";
+				pstmt2 = con.prepareStatement(sql2);
+				// ?채워넣기
+				pstmt2.setString(1, id); // set 문자열(1번째 물음표, 값 id)
+				// => 4단계 SQL구문을 실행(insert,update,delete)
+				pstmt2.executeUpdate();
+				// => 세션값 초기화
+			} catch (Exception e) {
+				e.printStackTrace(); // 에러처리
+			} finally {
+				// 예외 상관없이 마무리 작업 => 객체생성한 기억장소 해제
+				if (pstmt2 != null) try {pstmt2.close();} catch (Exception e2) {}
+				if (con != null) try {con.close();} catch (Exception e2) {}
+			}
+		} // deleteUser()
+		
+		public void updateUser(UserDTO updateDto) {
+			Connection con = null;
+			PreparedStatement pstmt2 = null;
+			// 1,2단계 디비연결 메서드 호출
+			try {
+				con = getConnection();
+
+				// if next() 다음행 => 리턴값 데이터 있으면 true => 아이디 비밀번호 일치
+				// => 3단계 pstmt2 SQL구문 만들어서 실행할 준비 (update set name=? where id=?)
+				// => 4단계 SQL구문을 실행(update)
+				String sql2 = "update members set pass=? uname=?, email=?, address1=?, address2=?, tel=? where id=?";
+				pstmt2 = con.prepareStatement(sql2);
+				//? 채워넣기
+				pstmt2.setString(1, updateDto.getId());
+				pstmt2.setString(2, updateDto.getPass());
+				pstmt2.setString(3, updateDto.getUname());
+				pstmt2.setString(4, updateDto.getBirth());
+				pstmt2.setString(5, updateDto.getEmail());
+				pstmt2.setString(6, updateDto.getAddress1());
+				pstmt2.setString(7, updateDto.getAddress2());
+				pstmt2.setString(8, updateDto.getTel());
+				
+
+				
+				// 4단계 SQL구문을 실행(insert,update,delete)
+				pstmt2.executeUpdate();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				// 예외 상관없이 마무리 작업 => 객체생성한 기억장소 해제
+				if (pstmt2 != null) try {pstmt2.close();} catch (Exception e2) {}
+				if (con != null)try {con.close();} catch (Exception e2) {}
+			}
+		}// updateUser()
 
 }

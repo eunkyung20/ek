@@ -26,7 +26,7 @@ ul.join_box{border: 1px solid #ddd;background-color: #fff;}
 .fpmgBt2{background-color: lightsalmon;color: #fff}
 </style>
 <body>
-<form action="" id="joinForm">
+<form action="" id="joinForm"> 
   <ul class="join_box">
   	<li class="checkBox check01">
   	

@@ -115,7 +115,7 @@ public class UserDAO {
 				if (con != null)try {con.close();} catch (Exception e2) {}
 				
 			}
-			}	
+		}	//insertUser
 		
 		public UserDTO getUser(String id) {
 			UserDTO dto=null;
@@ -164,5 +164,43 @@ public class UserDAO {
 			}
 			return dto;
 		}//getUser()
+		
+		public UserDTO findId(String uname, String email) {
+			UserDTO dto=null;
+			Connection con =null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			
+			try {
+				//1,2 디비연결 메서드
+				con=getConnection();
+				
+				//3단계 SQL구문 만들어서 실행할 준비(select 조건 where id=?)
+				String sql="select * from users where uname=? and email=? ";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, uname);
+				pstmt.setString(2, email);
+				
+
+				//4단계 SQL구문을 실행(select) => 결과 저장
+				rs=pstmt.executeQuery();
+				
+				if(rs.next()) {
+					dto=new UserDTO();
+		
+					dto.setUname(rs.getString("uname"));
+					dto.setEmail(rs.getString("email"));
+				}
+					
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(rs!=null) try { rs.close();} catch (Exception e2) {}
+				if(pstmt!=null) try { pstmt.close();} catch (Exception e2) {}
+				if(con!=null) try { con.close();} catch (Exception e2) {}
+			}
+			return dto;
+		}// findId
+			
 
 }

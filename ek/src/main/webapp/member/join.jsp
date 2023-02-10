@@ -141,7 +141,11 @@
                     guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
                     guideTextBox.style.display = 'block';
 
-                }  else {
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
                     guideTextBox.innerHTML = '';
                     guideTextBox.style.display = 'none';
                 }
@@ -156,8 +160,8 @@
 			<fieldset>
 				<legend>회원가입</legend>
 				회원유형
-				<input type="radio" name="ra" value="1" checked>일반회원
-		  		<input type="radio" name="ra" value="2">사장님<br>
+				<input type="radio" name="ra" value="일반회원" checked>일반회원
+		  		<input type="radio" name="ra" value="사장님">사장님<br>
 				<label>아이디</label> <input type="text" name="id" class="id">
 				<input type="button" value="중복확인" class="dup"><br>
 				<label></label>
@@ -167,7 +171,7 @@
 				<label>비밀번호 재확인</label> 
 				<input type="password" name="pass2" class="pass2"><br> 
 				<label>이름</label>
-				<input type="text" name="uname" class="name"><br> 
+				<input type="text" name="name" class="name"><br> 
 				성별
 				<select name="gender">
 					<option value="남">남</option>
@@ -184,7 +188,7 @@
 				<input type="text" id="sample4_postcode" class="address" placeholder="우편번호">
 				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 				<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-				//<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+				<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
 				<span id="guide" style="color:#999;display:none"></span><br>
 				<input type="text" id="sample4_detailAddress" placeholder="상세주소">
 			</fieldset>

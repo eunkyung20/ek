@@ -1,83 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="../script/jquery-3.6.3.js"></script>
+<link href="css/default.css" rel="stylesheet" type="text/css">
+<link href="css/subpage.css" rel="stylesheet" type="text/css">
+<!--[if lt IE 9]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js" type="text/javascript"></script>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/ie7-squish.js" type="text/javascript"></script>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+<![endif]-->
+<!--[if IE 6]>
+ <script src="../script/DD_belatedPNG_0.0.8a.js"></script>
+ <script>
+   /* EXAMPLE */
+   DD_belatedPNG.fix('#wrap');
+   DD_belatedPNG.fix('#main_img');   
+
+ </script>
+ <![endif]-->
+ <script type="text/javascript" src="script/jquery-3.6.3.js"></script>
  <script type="text/javascript">
- 
+ 	// jQuery 준비 => 대상.함수()
  	$(document).ready(function(){
- 	 		
+// 		alert("준비");
+	// submit 버튼을 클릭했을때 폼태그가 전송되어지면 이벤트 onsubmit()
+	// id="join" 폼태그 표시 (id #, class .) => 전송
 	$('#join').submit(function(){
+//		alert("전송");
+	// class="id" 대상.함수()
 	if($('.id').val()==""){
-		alert("아이디를 입력하세요.");
+		alert("아이디 입력하세요");
 		$('.id').focus();
+		// 대상 지정 * 전체, h1 태그, id=이름 #이름, class=이름 .이름
+//		$('*').css('color','red');
+//		$('form').css('color','blue');
 		return false;
 	}
 	
 	// class="pass"
 	if($('.pass').val()==""){
-		alert("비밀번호를 입력하세요.");
+		alert("비밀번호 입력하세요");
 		$('.pass').focus();
 		return false;
 	}
 	
 	// class="pass2"
 	if($('.pass2').val()==""){
-		alert("비밀번호를 입력하세요.");
+		alert("비밀번호2 입력하세요");
 		$('.pass2').focus();
 		return false;
 	}
 	
 	if($('.pass').val() != $('.pass2').val()){
-		alert("비밀번호가 일치하지 않습니다.");
+		alert("비밀번호 틀림");
 		$('.pass2').focus();
 		return false;
 	}
 	
-	if ( ! (document.joinform.pass.value.length >= 8 && document.joinform.pass.value.length <= 16)) {
-			alert("비밀번호 8 ~ 16자 사이로 입력해주세요");
-			document.joinform.pass.focus();
-			return false;
-		}
-	
 	// class="name"
 	if($('.name').val()==""){
-		alert("이름을 입력하세요.");
+		alert("이름 입력하세요");
 		$('.name').focus();
-		return false;
-	}
-	
-	// class="birth"
-	if($('.birth').val()==""){
-		alert("생년월일을 입력하세요.");
-		$('.birth').focus();
 		return false;
 	}
 	
 	// class="email"
 	if($('.email').val()==""){
-		alert("이메일을 입력하세요.");
+		alert("이메일 입력하세요");
 		$('.email').focus();
 		return false;
 	}
 	
-	// class="tel"
-	if($('.tel').val()==""){
-		alert("전화번호를 입력하세요.");
-		$('.tel').focus();
+	// class="email2"
+	if($('.email2').val()==""){
+		alert("이메일2 입력하세요");
+		$('.email2').focus();
 		return false;
 	}
 	
-	// class="address"
-	if($('.address').val()==""){
-		alert("주소를 입력하세요.");
-		$('.address').focus();
+	if($('.email').val() != $('.email2').val()){
+		alert("이메일 틀림");
+		$('.email2').focus();
 		return false;
 	}
-
 		}); //
 	
 	// class="dup" 클릭했을때
@@ -88,116 +96,98 @@
 			$('.id').focus();
 			return false;
 		}
-		
+	// ajax
+	// 페이지 이동없이 디비에 가서 아이디 중복체크해서 결과를 가져와서 출력
 	// idCheck.jsp
 	$.ajax({
-		url:'idCheck.jsp',
+		url:'MemberIdCheck.me', // 가상주소
 		data:{'id':$('.id').val()},
 		success:function(result){
-			if(result.trim()=="중복확인"){
+			// result.trim() => 결과값 앞뒤로 공백 제거
+			if(result.trim()=="아이디 중복"){
 				$('.divresult').html(result).css("color","red");	
 			}else{
 				$('.divresult').html(result).css("color","blue");	
 			}			
 		}
 	});
-	}); 
+	
+		
+	// class="divresult" => 아이디 중복
+//	$('.divresult').html("아이디 중복").css("color","red"); // 대상에 내용을 넣겠다
+//	$('.divresult').html("아이디 사용가능").css("color","blue");
+	});
 		
  }); //준비
  </script>
- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-    function sample4_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-
-                var roadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 참고 항목 변수
-
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraRoadAddr += data.bname;
-                }
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-
-                document.getElementById('sample4_postcode').value = data.zonecode;
-                document.getElementById("sample4_roadAddress").value = roadAddr;
-                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-
-                if(roadAddr !== ''){
-                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                } else {
-                    document.getElementById("sample4_extraAddress").value = '';
-                }
-
-                var guideTextBox = document.getElementById("guide");
-
-                if(data.autoRoadAddress) {
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                    guideTextBox.style.display = 'block';
-
-                } else if(data.autoJibunAddress) {
-                    var expJibunAddr = data.autoJibunAddress;
-                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                    guideTextBox.style.display = 'block';
-                } else {
-                    guideTextBox.innerHTML = '';
-                    guideTextBox.style.display = 'none';
-                }
-            }
-        }).open();
-    }
-</script>
+ 
+ 
 </head>
 <body>
-	<article>
-		<form action="joinPro.jsp" name="joinform" id="join" method="post">
-			<fieldset>
-				<legend>회원가입</legend>
-				회원유형
-				<input type="radio" name="ra" value="일반회원" checked>일반회원
-		  		<input type="radio" name="ra" value="사장님">사장님<br>
-				<label>아이디</label> <input type="text" name="id" class="id">
-				<input type="button" value="중복확인" class="dup"><br>
-				<label></label>
-				<div class="divresult"> </div><br> 
-				<label>비밀번호</label> 
-				<input type="password" name="pass" class="pass"><br> 
-				<label>비밀번호 재확인</label> 
-				<input type="password" name="pass2" class="pass2"><br> 
-				<label>이름</label>
-				<input type="text" name="name" class="name"><br> 
-				성별
-				<select name="gender">
-					<option value="남">남</option>
-					<option value="여">여</option>
-					<option value="선택안함">선택안함</option>
-				</select><br>
-				<label>생년월일</label>
-				<input type="date" name="birth" class="birth"><br>
-				<label>이메일</label>
-				<input type="email" name="email" class="email"><br>
-				<label>전화번호</label> 
-				<input type="text" name="tel" class="tel"><br>
-				<label>주소</label>
-				<input type="text" id="sample4_postcode" class="address" placeholder="우편번호">
-				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-				<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
-				<span id="guide" style="color:#999;display:none"></span><br>
-				<input type="text" id="sample4_detailAddress" placeholder="상세주소">
-			</fieldset>
-			<div class="clear"></div>
-			<div id="buttons">
-				<input type="submit" value="가입하기" class="submit" onclick="fun1()"> 
-				<input type="reset" value="초기화하기" class="cancel">
-			</div>
-		</form>
-	</article>
+<div id="wrap">
+<!-- 헤더들어가는 곳 -->
+<jsp:include page="../inc/top.jsp" />
+<!-- 헤더들어가는 곳 -->
+
+<!-- 본문들어가는 곳 -->
+<!-- 본문메인이미지 -->
+<div id="sub_img_member"></div>
+<!-- 본문메인이미지 -->
+<!-- 왼쪽메뉴 -->
+<nav id="sub_menu">
+<ul>
+<li><a href="#">Join us</a></li>
+<li><a href="#">Privacy policy</a></li>
+</ul>
+</nav>
+<!-- 왼쪽메뉴 -->
+<!-- 본문내용 -->
+<article>
+<h1>Join Us</h1>
+<form action="MemberInsertPro.me" id="join" method="post">
+<fieldset>
+<legend>Basic Info</legend>
+<label>User ID</label>
+<input type="text" name="id" class="id">
+<input type="button" value="dup. check" class="dup"><br>
+<label></label>
+<div class="divresult">아이디 중복체크 결과</div><br>
+
+<label>Password</label>
+<input type="password" name="pass" class="pass"><br>
+<label>Retype Password</label>
+<input type="password" name="pass2" class="pass2"><br>
+<label>Name</label>
+<input type="text" name="name" class="name"><br>
+<label>E-Mail</label>
+<input type="email" name="email" class="email"><br>
+<label>Retype E-Mail</label>
+<input type="email" name="email2" class="email2"><br>
+</fieldset>
+
+<fieldset>
+<legend>Optional</legend>
+<label>Address</label>
+<input type="text" name="address"><br>
+<label>Phone Number</label>
+<input type="text" name="phone"><br>
+<label>Mobile Phone Number</label>
+<input type="text" name="mobile"><br>
+</fieldset>
+<div class="clear"></div>
+<div id="buttons">
+<input type="submit" value="Submit" class="submit">
+<input type="reset" value="Cancel" class="cancel">
+</div>
+</form>
+</article>
+<!-- 본문내용 -->
+<!-- 본문들어가는 곳 -->
+
+<div class="clear"></div>
+<!-- 푸터들어가는 곳 -->
+<jsp:include page="../inc/bottom.jsp" />
+<!-- 푸터들어가는 곳 -->
+</div>
 </body>
 </html>

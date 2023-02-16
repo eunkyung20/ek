@@ -1,34 +1,45 @@
-<%@page import="member.UserDAO"%>
-<%@page import="member.UserDTO"%>
+<%@page import="member.MemberDAO"%>
 <%@page import="java.sql.Timestamp"%>
+<%@page import="member.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+// member/joinPro.jsp
+// 서버에 request 저장
+// request 한글처리
 request.setCharacterEncoding("utf-8");
-
+// request 파라미터 가져오기 id, pass, name => 변수 저장
 String id=request.getParameter("id");
 String pass=request.getParameter("pass");
-String uname=request.getParameter("uname");
-String birth = request.getParameter("birth");
-Timestamp joindate=new Timestamp(System.currentTimeMillis());
+String name=request.getParameter("name");
+// 현시스템 날짜 Timestamp 가져오기 => date 변수 저장
+Timestamp date=new Timestamp(System.currentTimeMillis());
+// 추가 email address phone mobile
 String email=request.getParameter("email");
-String address1=request.getParameter("address1");
-String address2=request.getParameter("address2");
-String tel=request.getParameter("tel");
-UserDTO dto = new UserDTO();
- 
+String address=request.getParameter("address");
+String phone=request.getParameter("phone");
+String mobile=request.getParameter("mobile");
+
+// MemberDTO 객체생성 => // 추가 email address phone mobile
+MemberDTO dto = new MemberDTO();
+// set 호출해서 값을 저장
 dto.setId(id);
 dto.setPass(pass);
-dto.setUname(uname);
-dto.setBirth(birth);
-dto.setJoindate(joindate);
+dto.setName(name);
+dto.setDate(date);
+//추가 email address phone mobile
 dto.setEmail(email);
-dto.setAddress1(address1);
-dto.setAddress2(address2);
-dto.setTel(tel);
+dto.setAddress(address);
+dto.setPhone(phone);
+dto.setMobile(mobile);
 
-UserDAO dao = new UserDAO();
-dao.insertUser(dto);
+// WEB-INF - lib - mysql-connector-j-8.0.31.jar 가져오기 
+// META-INF => context.xml 가져오기
+// MemberDAO 객체생성
+MemberDAO dao = new MemberDAO();
+// insertMember(dto) 메서드 호출 => // 추가 email address phone mobile
+dao.insertMember(dto);
 
+// login.jsp 이동
 response.sendRedirect("login.jsp"); 
 %>

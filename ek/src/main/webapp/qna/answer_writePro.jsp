@@ -14,7 +14,6 @@ UserDAO udao=new UserDAO();
 UserDTO udto=udao.getUser(id);
 
 //request qpw, qtitle, qcount, qdate, qcontent 가져와서 변수에 저장
-int qpw=0000;
 String qtitle=request.getParameter("qtitle");
 int qcount=0;
 Timestamp qadate=new Timestamp(System.currentTimeMillis());

@@ -39,6 +39,6 @@ QnaDAO dao=new QnaDAO();
 dao.insertQna(dto);
 
 //글목록 qnaList.jsp
-response.sendRedirect("qnaList.jsp");
+//response.sendRedirect("qnaList.jsp");
 %>
 

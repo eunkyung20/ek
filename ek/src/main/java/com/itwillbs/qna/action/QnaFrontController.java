@@ -2,12 +2,11 @@ package com.itwillbs.qna.action;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.itwillbs.board.action.BoardContent;
 
 public class QnaFrontController extends HttpServlet{
 
@@ -41,7 +40,7 @@ public class QnaFrontController extends HttpServlet{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+	 
 	}else if(sPath.equals("/QnaQuestion.qa")) {
 		action = new QnaQuestion();
 		try {
@@ -49,8 +48,42 @@ public class QnaFrontController extends HttpServlet{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	
+	}else if(sPath.equals("/QuestionWriteForm.qa")) {
+		forward=new ActionForward();
+		forward.setPath("qna/question_writeForm.jsp");
+		forward.setRedirect(false);
+	
+	}else if(sPath.equals("/QuestionWritePro.qa")) {
+		action = new QuestionWritePro();
+		try {
+			forward=action.execute(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}		
+	
+	
+	
+	
+	
+	
+	
+	//---------------------------------------------
+	// 이동
+	if(forward!=null) {
+		if(forward.isRedirect()==true) {
+			response.sendRedirect(forward.getPath());
+		}else {
+		//	forward.isRedirect()==false
+			RequestDispatcher dispatcher=
+			request.getRequestDispatcher(forward.getPath());
+			dispatcher.forward(request, response);
+		}
 	}
-	}
+	
 }
+	}
+
 	
 

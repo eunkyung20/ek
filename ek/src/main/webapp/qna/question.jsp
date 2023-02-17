@@ -50,15 +50,15 @@ int qno=(Integer)request.getAttribute("qno");
 		if(id.equals(udto.getId())){
 	%>
 	<input type="button" value="글수정" 
-	onclick="location.href='question_updateForm.jsp?qno=<%=qdto.getQno()%>'">
+	onclick="location.href='QuestionUpdateForm.qa'">
 	<input type="button" value="글삭제" 
-	onclick="location.href='question_delete.jsp?qno=<%=qdto.getQno()%>'">
+	onclick="location.href='QuestionDelete.qa'">
 	<%
 		}
 	}
 	%>
 	<input type="button" value="글목록" 
-	onclick="location.href='qnaList.jsp'">
+	onclick="location.href='QnaList.qa'">
 	
 	<!-- 답변이 있을때만 답변확인버튼 보이게 -->
 	<%

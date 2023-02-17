@@ -14,28 +14,41 @@
 <!-- 헤더들어가는 곳 -->
 <jsp:include page="../inc/header.jsp" />
 <!-- 헤더들어가는 곳 -->
+
+<!-- 한페이지에 보여줄 글 개수 -->
 <%
-//QnaDAO 객체 생성
-QnaDAO dao=new QnaDAO();
+// //QnaDAO 객체 생성
+// QnaDAO dao=new QnaDAO();
 
-//한페이지에 보여줄 글개수 설정
-int pageSize=10;
+// //한페이지에 보여줄 글개수 설정
+// int pageSize=10;
 
-//현 페이지 번호 가져오기 => 페이지 번호가 없으면 1페이지 설정
-String pageNum=request.getParameter("pageNum");
-if(pageNum==null){
-	// => 페이지 번호가 없으면 1페이지 설정
-	pageNum="1";
-}
-// pageNum => 숫자변경
-int currentPage=Integer.parseInt(pageNum);
-//시작하는 행번호 구하기
-int startRow=(currentPage-1)*pageSize+1;
-//끝나는 행번호 구하기
-int endRow=startRow+pageSize-1;
+// //현 페이지 번호 가져오기 => 페이지 번호가 없으면 1페이지 설정
+// String pageNum=request.getParameter("pageNum");
+// if(pageNum==null){
+// 	// => 페이지 번호가 없으면 1페이지 설정
+// 	pageNum="1";
+// }
 
-//메서드 호출
-ArrayList<QnaDTO> qnaList = dao.getQnaList(startRow, pageSize); 
+// // pageNum => 숫자변경
+// int currentPage=Integer.parseInt(pageNum);
+
+// //시작하는 행번호 구하기
+// int startRow=(currentPage-1)*pageSize+1;
+
+// //끝나는 행번호 구하기
+// int endRow=startRow+pageSize-1;
+
+// //메서드 호출
+// ArrayList<QnaDTO> qnaList = dao.getQnaList(startRow, pageSize); 
+
+ArrayList<QnaDTO> qnaList = (ArrayList<QnaDTO>)request.getAttribute("qnaList");
+int currentPage =(Integer)request.getAttribute("currentPage");
+int pageBlock =(Integer)request.getAttribute("pageBlock");
+int startPage =(Integer)request.getAttribute("startPage");
+int endPage =(Integer)request.getAttribute("endPage");
+int pageCount =(Integer)request.getAttribute("pageCount");
+
 SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd");
 
 String qstatus = "";
@@ -57,11 +70,10 @@ if(dto.getQstatus()==0){
 }else{
 	qstatus="답변미등록";
 }
-
 %>
 	<tr><td><%=dto.getQno() %></td>
 		<td><%=dto.getNo() %></td>
-		<td><a href="question.jsp?qno=<%=dto.getQno() %>"><%=dto.getQtitle() %></a></td>
+		<td><a href="QnaQuestion.qa?qno=<%=dto.getQno() %>"><%=dto.getQtitle() %></a></td>
 		<td><%=dateFormat.format(dto.getQdate()) %></td>
 		<td><%=qstatus%></td>	
 		<td><%=dto.getQcount()%></td></tr>	
@@ -70,45 +82,50 @@ if(dto.getQstatus()==0){
 %>
 </table>
 <div id="table_search">
-<input type="button" value="글쓰기" class="write" onclick="location.href='q_writeForm.jsp'"><br>
+<input type="button" value="글쓰기" class="write" onclick="location.href='QuestionWriteForm.qa'"><br>
 </div>
+
+<!-- 페이징 처리 -->
 	<%
-// 한화면에 보여줄 페이지 개수 설정
-int pageBlock=10;
-// 시작하는 페이지 번호 구하기
-int startPage=(currentPage-1)/pageBlock*pageBlock+1;
-// 끝나는 페이지 번호 구하기
-int endPage=startPage+pageBlock-1;
+// // 한화면에 보여줄 페이지 개수 설정
+// int pageBlock=10;
+// // 시작하는 페이지 번호 구하기
+// int startPage=(currentPage-1)/pageBlock*pageBlock+1;
+// // 끝나는 페이지 번호 구하기
+// int endPage=startPage+pageBlock-1;
 
-int count = dao.getQnaCount();
+// int count = dao.getQnaCount();
 
-// 전체페이지(pageCount) 구하기 
-int pageCount=count/pageSize+(count%pageSize==0?0:1); 
-if(endPage > pageCount){
-	endPage = pageCount;
-}
+// // 전체페이지(pageCount) 구하기 
+// int pageCount=count/pageSize+(count%pageSize==0?0:1); 
+// if(endPage > pageCount){
+// 	endPage = pageCount;
+// }
 
 // 10페이지 이전
 if(startPage > pageBlock){
 	%>
- 	<a href="qnaList.jsp?pageNum=<%=currentPage-pageBlock %>">[10페이지 이전]</a>
+ 	<a href="QnaList.qa?pageNum=<%=currentPage-pageBlock %>">[10페이지 이전]</a>
 	<%
 }
 
 for(int i=startPage;i<=endPage;i++){
 	%>
-	<a href="qnaList.jsp?pageNum=<%=i %>"><%=i %></a>
+	<a href="QnaList.qa?pageNum=<%=i %>"><%=i %></a>
 	<%
 }
 
 // 10페이지 다음
 if(endPage < pageCount){
 	%>
-	<a href="qnaList.jsp?pageNum=<%=startPage+pageBlock %>">[10페이지 다음]</a>
+	<a href="QnaList.qa?pageNum=<%=startPage+pageBlock %>">[10페이지 다음]</a>
 		<%
 }
 %>
 
 </article>		
+
+<!-- 푸터 들어가는 곳 -->
+<%-- <jsp:include page="../inc/footer.jsp" /> --%>
 </body>
 </html>

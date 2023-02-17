@@ -9,6 +9,10 @@
 <title>qna/q_writeForm.jsp</title>
 </head>
 <body>
+
+<!-- 헤더파일들어가는 곳 -->
+<jsp:include page="../inc/header.jsp" />
+
 <%
 // id값 받아오기
 String id=(String)session.getAttribute("id");
@@ -19,13 +23,13 @@ int no = rdto.getNo();
 
 //로그인 되어있지 않으면 로그인화면으로
 if(id==null){
-	response.sendRedirect("../member/login.jsp");
+	response.sendRedirect("MemberLogin.me");
 }
 
 %>
 
 <h1>질문</h1>
-<form action="question_writePro.jsp" method="post"> 
+<form action="QuestionWritePro.qa" method="post"> 
 <input type="hidden" name="no" value="<%=no%>">
 	<table border="1">
 		<tr><td>작성자</td>
@@ -36,6 +40,10 @@ if(id==null){
 			<td><textarea name="qcontent" rows="10" cols="20"></textarea></td></tr>
 		<tr><td colspan="2"><input type="submit" value="글쓰기"></td></tr>
 	</table>
+	
+	<!-- 푸터 들어가는 곳 -->
+<%-- <jsp:include page="../inc/footer.jsp" /> --%>
+	
 </form>
 </body>
 </html>
